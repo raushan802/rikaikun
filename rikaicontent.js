@@ -3,7 +3,7 @@
 	Rikaikun
 	Copyright (C) 2010 Erek Speed
 	http://code.google.com/p/rikaikun/
-	
+
 	---
 
 	Originally based on Rikaichan 1.07
@@ -48,7 +48,7 @@ var rcxContent = {
 	forceKanji: 0,
 	defaultDict: 2,
 	nextDict: 3,
-	
+
 	//Adds the listeners and stuff.
 	enableTab: function() {
 		if (window.rikaichan == null) {
@@ -60,7 +60,7 @@ var rcxContent = {
 			window.addEventListener('mouseup', this.onMouseUp, false);
 		}
 	},
-	
+
 	//Removes the listeners and stuff
 	disableTab: function() {
 		if(window.rikaichan != null) {
@@ -80,7 +80,7 @@ var rcxContent = {
 			delete window.rikaichan;
 		}
 	},
-	
+
 	getContentType: function(tDoc) {
 		var m = tDoc.getElementsByTagName('meta');
 		for(var i in m) {
@@ -105,7 +105,7 @@ var rcxContent = {
 			css.setAttribute('rel', 'stylesheet');
 			css.setAttribute('type', 'text/css');
 			var cssdoc = window.rikaichan.config.css;
-			css.setAttribute('href', chrome.extension.getURL('css/popup-' + 
+			css.setAttribute('href', chrome.extension.getURL('css/popup-' +
 																cssdoc + '.css'));
 			css.setAttribute('id', 'rikaichan-css');
 			topdoc.getElementsByTagName('head')[0].appendChild(css);
@@ -244,7 +244,7 @@ var rcxContent = {
 					}
 				}
 				else y += v;
-				
+
 
 				x += window.scrollX;
 				y += window.scrollY;
@@ -259,7 +259,7 @@ var rcxContent = {
 		popup.style.top = y + 'px';
 		popup.style.display = '';
 	},
-	
+
 	hidePopup: function() {
 		var popup = document.getElementById('rikaichan-window');
 		if (popup) {
@@ -268,7 +268,7 @@ var rcxContent = {
 		}
 		this.title = null;
 	},
-	
+
 	isVisible: function() {
 		var popup = document.getElementById('rikaichan-window');
 		return (popup) && (popup.style.display != 'none');
@@ -281,18 +281,18 @@ var rcxContent = {
 			tdata.prevSelView = null;
 			return;
 		}
-		
+
 		var sel = tdata.prevSelView.getSelection();
 		// If there is an empty selection or the selection was done by
 		// rikaikun then we'll clear it
 		if ((!sel.toString()) || (tdata.selText == sel.toString())) {
 			// In the case of no selection we clear the oldTA
-			// The reason for this is becasue if there's no selection 
-			// we probably clicked somewhere else and we don't want to 
+			// The reason for this is becasue if there's no selection
+			// we probably clicked somewhere else and we don't want to
 			// bounce back.
 		    if(!sel.toString())
 		        tdata.oldTA = null;
-				
+
 			// clear all selections
 		    sel.removeAllRanges();
 		    //Text area stuff
@@ -302,22 +302,22 @@ var rcxContent = {
 			// if oldCaret is less than 0 it means we clicked outside the box and shouldn't
 			// come back
 		    if(tdata.oldTA && tdata.oldCaret >= 0) {
-		        tdata.oldTA.selectionStart = tdata.oldTA.selectionEnd = tdata.oldCaret; 
-		      
+		        tdata.oldTA.selectionStart = tdata.oldTA.selectionEnd = tdata.oldCaret;
+
 		    }
-		    
+
 		}
 		tdata.prevSelView = null;
 		tdata.kanjiChar = null;
 		tdata.selText = null;
 	},
-	
+
 	lastFound: null,
 
 	configPage: function() {
 		window.openDialog('chrome://rikaichan/content/prefs.xul', '', 'chrome,centerscreen');
 	},
-	
+
 	keysDown: [],
 	lastPos: { x: null, y: null},
 	lastTarget: null,
@@ -408,9 +408,9 @@ var rcxContent = {
 			ev.preventDefault();
 		}
 	},
-	
+
 	mDown: false,
-	
+
 	onMouseDown: function(ev) { rcxContent._onMouseDown(ev) },
 	_onMouseDown: function(ev) {
 	        if(ev.button != 0)
@@ -418,7 +418,7 @@ var rcxContent = {
 		if(this.isVisible())
 		    this.clearHi();
 		mDown = true;
-		
+
 		// If we click outside of a text box then we set
 		// oldCaret to -1 as an indicator not to restore position
 		// Otherwise, we switch our saved textarea to whereever
@@ -428,18 +428,18 @@ var rcxContent = {
 		else
 		    window.rikaichan.oldTA = ev.target;
 	},
-	
+
 	onMouseUp: function(ev) { rcxContent._onMouseUp(ev) },
 	_onMouseUp: function(ev) {
 	        if(ev.button != 0)
 	            return;
 		mDown = false;
 	},
-	
+
 	onKeyUp: function(ev) {
 		if (rcxContent.keysDown[ev.keyCode]) rcxContent.keysDown[ev.keyCode] = 0;
 	},
-	
+
 		unicodeInfo: function(c) {
 		 hex = '0123456789ABCDEF';
 		 u = c.charCodeAt(0);
@@ -492,12 +492,12 @@ var rcxContent = {
 		'RB': true,
 		'RT': true,
 		'RP': true
-	},	
+	},
 	isInline: function(node) {
-		return this.inlineNames.hasOwnProperty(node.nodeName) || 
+		return this.inlineNames.hasOwnProperty(node.nodeName) ||
 		// only check styles for elements
 		// comments do not have getComputedStyle method
-		(document.nodeType == Node.ELEMENT_NODE && 
+		(document.nodeType == Node.ELEMENT_NODE &&
 			(document.defaultView.getComputedStyle(node,null).getPropertyValue('display') == 'inline' ||
 			document.defaultView.getComputedStyle(node,null).getPropertyValue('display') == 'inline-block')
 		);
@@ -560,9 +560,9 @@ var rcxContent = {
 			var endIndex = Math.min(rangeParent.data.length, offset + maxLength);
 			return rangeParent.value.substring(offset, endIndex);
 		}
-	
+
 		var text = '';
-		
+
 		var endIndex;
 
 		var xpathExpr = rangeParent.ownerDocument.createExpression(this.textNodeExpr, null);
@@ -588,7 +588,7 @@ var rcxContent = {
 	lastSelEnd:  [],
 	// Hack because ro was coming out always 0 for some reason.
 	lastRo: 0,
-	
+
 	show: function(tdata, dictOption) {
 		var rp = tdata.prevRangeNode;
 		var ro = tdata.prevRangeOfs + tdata.uofs;
@@ -633,21 +633,21 @@ var rcxContent = {
 		//selection end data
 		var selEndList = [];
 		var text = this.getTextFromRange(rp, ro, selEndList, 13 /*maxlength*/);
-		
+
 		lastSelEnd = selEndList;
 		lastRo = ro;
 		chrome.extension.sendMessage({"type":"xsearch", "text":text, "dictOption": String(dictOption) },
 		rcxContent.processEntry);
-		
+
 		return 1;
-		
+
 	},
-		
+
 	processEntry: function(e) {
 		tdata = window.rikaichan;
 		ro = lastRo;
 		selEndList = lastSelEnd;
-	
+
 		if (!e) {
 			rcxContent.hidePopup();
 			rcxContent.clearHi();
@@ -658,10 +658,10 @@ var rcxContent = {
 		if (!e.matchLen) e.matchLen = 1;
 		tdata.uofsNext = e.matchLen;
 		tdata.uofs = (ro - tdata.prevRangeOfs);
-		
+
 		rp = tdata.prevRangeNode;
 		// don't try to highlight form elements
-		if ((rp) && ((tdata.config.highlight == 'true' && !this.mDown && !('form' in tdata.prevTarget))  || 
+		if ((rp) && ((tdata.config.highlight == 'true' && !this.mDown && !('form' in tdata.prevTarget))  ||
 					(('form' in tdata.prevTarget) && tdata.config.textboxhl == 'true'))) {
 			var doc = rp.ownerDocument;
 			if (!doc) {
@@ -672,7 +672,7 @@ var rcxContent = {
 			rcxContent.highlightMatch(doc, rp, ro, e.matchLen, selEndList, tdata);
 			tdata.prevSelView = doc.defaultView;
 		}
-		
+
 		chrome.extension.sendMessage({"type":"makehtml", "entry":e}, rcxContent.processHtml);
 	},
 
@@ -684,17 +684,17 @@ var rcxContent = {
 
 	highlightMatch: function (doc, rp, ro, matchLen, selEndList, tdata) {
 	    var sel = doc.defaultView.getSelection();
-	    
+
 		// If selEndList is empty then we're dealing with a textarea/input situation
-		if (selEndList.length === 0) { 
+		if (selEndList.length === 0) {
 		    try {
 				if(rp.nodeName == 'TEXTAREA' || rp.nodeName == 'INPUT') {
-					
+
 					// If there is already a selected region not caused by
 					// rikaikun, leave it alone
 					if((sel.toString()) && (tdata.selText != sel.toString()))
 						return;
-					
+
 					// If there is no selected region and the saved
 					// textbox is the same as teh current one
 					// then save the current cursor position
@@ -706,30 +706,30 @@ var rcxContent = {
 					}
 					rp.selectionStart = ro;
 					rp.selectionEnd = matchLen + ro;
-					
-					tdata.selText = rp.value.substring(ro, matchLen+ro);	
+
+					tdata.selText = rp.value.substring(ro, matchLen+ro);
 				}
 		    }
 		    catch(err) {
 				// If there is an error it is probably caused by the input type
 				// being not text.  This is the most general way to deal with
 				// arbitrary types.
-				
+
 				// we set oldTA to null because we don't want to do weird stuf
 				// with buttons
 		        tdata.oldTA = null;
 		        //console.log("invalid input type for selection:" + rp.type);
-		        console.log(err.message);
+		        //console.log(err.message);
 		    }
 		    return;
 		}
-		
+
 		// Special case for leaving a text box to an outside japanese
 		// Even if we're not currently in a text area we should save
 		// the last one we were in.
 		if(tdata.oldTA && !sel.toString() && tdata.oldCaret >= 0)
-			tdata.oldCaret = tdata.oldTA.selectionStart;   
-                
+			tdata.oldCaret = tdata.oldTA.selectionStart;
+
 		var selEnd;
 		var offset = matchLen + ro;
 
@@ -751,13 +751,13 @@ var rcxContent = {
 	},
 
 	showTitle: function(tdata) {
-		chrome.extension.sendMessage({"type":"translate", "title":tdata.title}, 
+		chrome.extension.sendMessage({"type":"translate", "title":tdata.title},
 			rcxContent.processTitle);
 	},
-	
+
 	processTitle: function(e) {
 		tdata = window.rikaichan;
-		
+
 		if (!e) {
 			rcxContent.hidePopup();
 			return;
@@ -767,7 +767,7 @@ var rcxContent = {
 		if (tdata.title.length > e.textLen) e.title += '...';
 
 		this.lastFound = [e];
-		
+
 		chrome.extension.sendMessage({"type":"makehtml", "entry":e}, rcxContent.processHtml);
 	},
 /*
@@ -784,7 +784,7 @@ var rcxContent = {
 			return true;
 		else return false;
 	},
-	
+
 */
 
 	getFirstTextChild: function(node) {
@@ -792,7 +792,7 @@ var rcxContent = {
 							node, null, XPathResult.ANY_TYPE, null).iterateNext();
 			//
 	},
-	
+
 	makeFake: function(real) {
 		var fake = document.createElement('div');
 		var realRect = real.getBoundingClientRect();
@@ -806,9 +806,9 @@ var rcxContent = {
 		fake.style.left = realRect.left + 'px';
 
 		return fake;
-		
+
 	},
-	
+
 	getTotalOffset: function(parent, tNode, offset) {
 	    var fChild = parent.firstChild;
 	    var realO = offset;
@@ -825,11 +825,11 @@ var rcxContent = {
 	        realO += val;
 	    }
 	    while((fChild = fChild.nextSibling) != tNode);
-	    
+
 	    return realO;
-	
+
 	},
-	
+
 	onMouseMove: function(ev) {
 		rcxContent.lastPos.x = ev.clientX;
 		rcxContent.lastPos.y = ev.clientY;
@@ -859,7 +859,7 @@ var rcxContent = {
 				fake.scrollTop = ev.target.scrollTop;
 				fake.scrollLeft = ev.target.scrollLeft;
 			}
-			
+
 			if(fake) {
 				// At the end of a line, don't do anything or you just get beginning of next line
 				if((rp.data) && rp.data.length == ro) {
@@ -869,12 +869,12 @@ var rcxContent = {
 				fake.style.display = "none";
 				ro = this.getTotalOffset(rp.parentNode, rp, ro);
 			}
-			
-	/*   		console.log( "offset: " + ro + " parentContainer: " +  rp.nodeName + 
-				" total size: " + (rp.data?rp.data.length:"") + " target: " + ev.target.nodeName + 
+
+	/*   		console.log( "offset: " + ro + " parentContainer: " +  rp.nodeName +
+				" total size: " + (rp.data?rp.data.length:"") + " target: " + ev.target.nodeName +
 				" parentparent: " + rp.parentNode.nodeName); */
-			
-			
+
+
 			// This is to account for bugs in caretRangeFromPoint
 			// It includes the fact that it returns text nodes over non text nodes
 			// and also the fact that it miss the first character of inline nodes.
@@ -916,16 +916,16 @@ var rcxContent = {
 				rp = rcxContent.getFirstTextChild(ev.target);
 				ro=0;
 			}
-			
-			
+
+
 			// Otherwise, we're off in nowhere land and we should go home.
 			// offset should be 0 or max in this case.
 			else if(!(fake) && (!(rp) || ((rp.parentNode != ev.target)))){
 				rp = null;
 				ro = -1;
-				
+
 			}
-			
+
 			// For text nodes do special stuff
 			// we make rp the text area and keep the offset the same
 			// we give the text area data so it can act normal
@@ -933,7 +933,7 @@ var rcxContent = {
 				rp = ev.target;
 				rp.data = rp.value
 			}
-			
+
 			if (ev.target == tdata.prevTarget && this.isVisible()) {
 				//console.log("exit due to same target");
 				if (tdata.title) {
@@ -945,7 +945,7 @@ var rcxContent = {
 					return;
 				}
 			}
-			
+
 			if(fake) document.body.removeChild(fake);
 		}
 		catch(err) {
@@ -953,8 +953,8 @@ var rcxContent = {
 			if(fake) document.body.removeChild(fake);
 			return;
 		}
-		
-			
+
+
 /*  		if ((rp) && (rp.nodeType != Node.TEXT_NODE) && !('form' in rp)) {
 			rp = null;
 			ro = -1;
@@ -1032,14 +1032,14 @@ chrome.runtime.onMessage.addListener(
 			case 'enable':
 				rcxContent.enableTab();
 				window.rikaichan.config = request.config;
-				console.log("enable");
+				//console.log("enable");
 				break;
 			case 'disable':
 				rcxContent.disableTab();
-				console.log("disable");
+				//console.log("disable");
 				break;
 			case 'showPopup':
-				console.log("showPopup");
+				//console.log("showPopup");
 				rcxContent.showPopup(request.text);
 				break;
 			default:

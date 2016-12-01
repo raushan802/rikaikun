@@ -5,11 +5,11 @@ chrome.runtime.onMessage.addListener(
 	function(request, sender, response) {
 		switch(request.type) {
 			case 'enable?':
-				console.log('enable?');
+				//console.log('enable?');
 				rcxMain.onTabSelect(sender.tab.id);
 				break;
 			case 'xsearch':
-				console.log('xsearch');
+				//console.log('xsearch');
 				var e = rcxMain.search(request.text, request.dictOption);
 				response(e);
 				break;
@@ -18,21 +18,21 @@ chrome.runtime.onMessage.addListener(
 				rcxMain.nextDict();
 				break;*/
 			case 'resetDict':
-				console.log('resetDict');
+				//console.log('resetDict');
 				rcxMain.resetDict();
 				break;
 			case 'translate':
-				console.log('translate');
+				//console.log('translate');
 				var e = rcxMain.dict.translate(request.title);
 				response(e);
 				break;
 			case 'makehtml':
-				console.log('makehtml');
+				//console.log('makehtml');
 				var html = rcxMain.dict.makeHtml(request.entry);
 				response(html);
 				break;
 			case 'switchOnlyReading':
-				console.log('switchOnlyReading');
+				//console.log('switchOnlyReading');
 				if(rcxMain.config.onlyreading == 'true')
 					rcxMain.config.onlyreading = 'false';
 				else
@@ -40,22 +40,22 @@ chrome.runtime.onMessage.addListener(
 				localStorage['onlyreading'] = rcxMain.config.onlyreading;
 				break;
 			case 'copyToClip':
-				console.log('copyToClip');
+				//console.log('copyToClip');
 				rcxMain.copyToClip(sender.tab, request.entry);
 				break;
 			default:
 				console.log(request);
 		}
 	});
-	
+
 if(initStorage("v0.8.92", true)) {
 	// v0.7
 	initStorage("popupcolor", "blue");
 	initStorage("highlight", true);
-	
+
 	// v0.8
 	// No changes to options
-	
+
 	// V0.8.5
 	initStorage("textboxhl", false);
 
@@ -90,15 +90,15 @@ if(initStorage("v0.8.92", true)) {
 	initStorage("showOnKey", "");
 }
 
-/** 
-* Initializes the localStorage for the given key. 
-* If the given key is already initialized, nothing happens. 
-* 
+/**
+* Initializes the localStorage for the given key.
+* If the given key is already initialized, nothing happens.
+*
 * @author Teo (GD API Guru)
-* @param key The key for which to initialize 
-* @param initialValue Initial value of localStorage on the given key 
-* @return true if a value is assigned or false if nothing happens 
-*/ 
+* @param key The key for which to initialize
+* @param initialValue Initial value of localStorage on the given key
+* @return true if a value is assigned or false if nothing happens
+*/
 function initStorage(key, initialValue) {
   var currentValue = localStorage[key];
   if (!currentValue) {
